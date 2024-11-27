@@ -21,6 +21,8 @@ trait HasEmptyState
 
     protected string | Closure | null $emptyStateIcon = null;
 
+    protected string | array | Closure | null $emptyStateIconColor = null;
+
     /**
      * @var array<Action | ActionGroup>
      */
@@ -90,6 +92,13 @@ trait HasEmptyState
         return $this;
     }
 
+    public function emptyStateIconColor(string | array | Closure | null $iconColor): static
+    {
+        $this->emptyStateIconColor = $iconColor;
+
+        return $this;
+    }
+
     public function getEmptyState(): View | Htmlable | null
     {
         return $this->evaluate($this->emptyState);
@@ -120,5 +129,10 @@ trait HasEmptyState
         return $this->evaluate($this->emptyStateIcon)
             ?? FilamentIcon::resolve('tables::empty-state')
             ?? 'heroicon-o-x-mark';
+    }
+
+    public function getEmptyStateIconColor(): string | array | null
+    {
+        return $this->evaluate($this->emptyStateIconColor);
     }
 }
